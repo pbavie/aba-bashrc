@@ -1,0 +1,378 @@
+# !/bin/bash
+#                            _____ _          
+#                           |_   _| |__   ___ 
+#                             | | | '_ \ / _ \
+#                             | | | | | |  __/
+#                             |_| |_| |_|\___|
+#  _               _             _ _                             _           
+# | |__   __ _ ___| |__     __ _| (_) __ _ ___  ___  ___    __ _| |__   __ _ 
+# | '_ \ / _` / __| '_ \   / _` | | |/ _` / __|/ _ \/ __|  / _` | '_ \ / _` |
+# | |_) | (_| \__ \ | | | | (_| | | | (_| \__ \  __/\__ \ | (_| | |_) | (_| |
+# |_.__/ \__,_|___/_| |_|  \__,_|_|_|\__,_|___/\___||___/  \__,_|_.__/ \__,_|
+#                                                                            
+##############################################################################
+# Aliases personalizati, se hai scaricato il mio ~/.bashrc questo file viene 
+# caricato DOPO il file "solito" .bash_aliases . Questo significa che se 
+# definisci un alias uguale nei due file quello che si trova QUI sarà quello 
+# che verrà effettivamente richiamato.
+#
+# Se si desidera un alias specifico per un sistema meglio iserirlo nel 
+# file ~/.bash_aliases per tenerselo per se... oppure sotto nella sezione
+# che li definisce in base a $HOSTNAME
+#
+##############################################################################
+#   OVVIAMENTE:
+#    
+#             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+#                     Version 2, December 2004
+# 
+#  Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
+# 
+#  Everyone is permitted to copy and distribute verbatim or modified
+#  copies of this license document, and changing it is allowed as long
+#  as the name is changed.
+# 
+#             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+#    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+# 
+#   0. You just DO WHAT THE FUCK YOU WANT TO.
+##############################################################################
+#   OPPURE:
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+##############################################################################
+#  Script-source by Paolo Baviero  <aba@baviero.it>  https://www.baviero.it
+
+alias ls='ls --color=auto'
+alias ll='pwd && ls -lh'
+alias la='ls -dh .?*' 
+alias lal='ls -Aldh .?*'
+#alias la='ls -Ah'
+#alias lal='ls -Alh'
+alias l='ls -CFh'
+alias lschange='ls -ltcr' #  Sort by/show change time,most recent last.
+#alias cp='cp -v'
+alias cp='gcp -r'
+alias mv='mv -nvi'
+alias rm='rm -v'
+alias free='echo MEMORIA RAM _MEGA_ && free -m'
+alias f='free'
+alias p='ps aux'
+alias c='clear'
+alias df='df -hT'
+alias d='df'
+alias m="findmnt -D"
+alias du='du -h'
+alias cd..='cd ..' #scrivendo veloce mi scappa :)
+alias ..='cd ..'
+alias cd-='cd -'
+alias cdback='cd $OLDPWD'
+alias i='ifconfig'
+alias ssh='ssh -X'
+alias grep='grep --colour'
+alias mkdir='mkdir -p'
+alias h='history'
+alias tree='tree -C'
+alias t='tree -Cuh'
+alias s='stat'
+alias sudo='sudo ' # Lo spazio dopo permette l'uso degli alias
+alias raid='mdadm -D /dev/md0'
+alias nano='nano -lc' # Numerare le righe (-l) e info in basso (-c)
+alias figlet_font='showfigfonts'
+
+export BEEP=/usr/share/sounds/KDE-Im-New-Mail.ogg 
+alias beep='paplay $BEEP --volume=32768'
+alias ore='echo "sono le ore $(date +%H:%M)" | tee /dev/tty |espeak -v it'
+alias parla='echo $@ | tee /dev/tty |espeak -v it'
+alias ora=ore
+alias top="htop"
+alias spegni='clear; echo "*** SPEGNIMENTO IMMEDIATO! S/N? ***" && read SCELTA &&  if [ "$SCELTA" == "S" ]; then sudo shutdown -h now; else echo "Ok Anullato"; fi'
+alias spengo="spegni"  
+
+alias aptsearch="apt-cache search"
+alias aptinstall="sudo apt-get install"
+alias aptremove="sudo apt-get remove --purge"
+
+
+#eval $(thefuck --alias fuck)
+
+
+##############################################################################
+# Aliases personali riconoscibili da aba-COMANDO
+# ovviamente non si scrivono del tutto... il <TAB> a cosa serve? :)
+alias aba-screen='screen -ls && screen -x || screen'
+alias aba-big-file_dir='du -Sh| sort -rh | head -5'
+alias aba-servizi_attivi='systemctl list-units --type=service --state=running'
+alias aba-asciifica='jp2a'
+alias aba-battery='echo "    BATTERIE :";upower -d | grep -E "state|to\ full|percentage" | tail -n 3'
+
+alias aba-sviluppina-wakeonlan='wakeonlan 00:16:76:D7:B0:AD'
+alias aba-benito-wakeonlan='wakeonlan 00:19:b9:f9:bc:0c'
+
+
+alias aba-ubuntu-version='lsb_release --release && lsb_release --codename'
+alias aba-ubuntu-pacchetti-installati="(zcat $(ls -tr /var/log/apt/history.log*.gz); cat /var/log/apt/history.log) 2>/dev/null | egrep '^(Start-Date:|Commandline:)' |  grep -v aptdaemon |egrep '^Commandline:'"
+alias aba-programmi-installati='sudo cat /root/.aba_programmi_installati'
+
+alias aba-log-login='cat /var/log/auth.log | grep Accepted | grep -v $USER | tail -n10'
+alias aba-ping-google='ping -c 3 google.it'
+
+alias aba-pdf-unisci-immagini="echo 'Unisce tutte le immagini presenti in un pdf'&& ls | sort -n | tr '\n' ' ' | sed 's/$/\ --output out.pdf --pagesize A4 -a/' | xargs img2pdf &&  echo 'file out.pdf creato'|| echo 'ERRORE, libera la directory da tutti i file non interessati dalla conversione'"
+alias aba-pdf-unisci-pdf="pdfunite"
+
+function aba-mencoder-lang()
+{
+echo -e "\033[36;41;1m\033[2KCodifica standard di un file Video con una particolare traccia audio\033[0m"
+if [ -n "$1" ]; then #Inserito un parametro
+    mplayer -vo null -ao null -identify -frames 0 "$1"| grep alang
+    echo -e "\033[36;41;1m\033[2KScegliere quale -alang usare\nSe non è presente NESSUN -alang o è presente uno solo non si può codificare con altre lingue\nInserire alang (ES: -alang ita -> scrivere solo ita)\033[0m"
+    read ALANG
+    mencoder -idx "$1" -ovc xvid -xvidencopts bitrate=900 -alang "$ALANG" -oac mp3lame -o "$1_$ALANG.avi"    
+else
+    echo -e "\033[36;41;1m\033[2KERRORE, occorre Selezionare un file\033[0m"
+fi
+}
+
+function aba-calc() # Semplice calcolatrice
+{
+if [ $# -ne 1 ] ; then
+    echo "$0: Scorciatoia per programma - bc - scrivi valori"
+else 
+    ( echo scale=2; echo "$@" ) | bc
+fi
+}
+alias aba-print-file='lpr'
+
+alias aba-ridimensiona25='convert -resize 25% -comment www.baviero.it *.jpg ./small/abadon-25%*.jpg'
+
+alias aba-find='find | grep -i'
+
+function aba-open()
+{
+xdg-open "$1" &
+}
+
+alias aba-apt-upgrade='sudo apt update && sudo apt upgrade'
+function aba-apt-downgrade()
+{
+echo -e "DOWNGRADE di un pacchetto\n"
+if [ -n "$1" ]; then
+    echo " Versioni DISPONIBILI: "
+    apt-cache show "$1" | grep Version
+    echo "Eseguiro : sudo apt-get install nomepacchetto=versione"
+    echo "Scrivi solo: nomepacchetto=versione e premi INVIO"
+    read PACCHETTO
+    sudo apt-get install $PACCHETTO
+    echo -e "\n *********** FATTO\n"
+    echo "Mettere il blocco all'aggiornamento del pacchetto?"
+    echo "Scegli < S > per (sudo apt-mark hold PACCHETTO)"
+    echo "Scegli < N > per (sudo apt-mark unhold PACCHETTO)"
+    
+    SCELTA="B"
+        while [ $SCELTA == "B" ]; do
+                echo "** Scegli, S/N?"
+                read SCELTA
+                if [ "$SCELTA" == "S" ] || [ "$SCELTA" == "s" ]; then
+                    echo "Eseguo sudo apt-mark hold di $PACCHETTO"
+                    sudo apt-mark hold $PACCHETTO
+                elif [ "$SCELTA" == "N" ] || [ "$SCELTA" == "n" ]; then
+                    echo "Ok, il pacchetto $PACCHETTO potrà essere aggiornato normalmente"
+                    echo "Eseguo sudo apt-mark unhold di $PACCHETTO"
+                    sudo apt-mark unhold $PACCHETTO
+                else
+                    SCELTA="B"
+                fi
+        done
+else
+    echo " Si deve inserire il nome del pacchetto da ripristinare"
+fi
+}
+
+alias aba-disk-control='smartctl -ia'
+alias aba-messages-syslog='tail -f /var/log/syslog'
+alias aba-LiveCdRom="qemu -boot d -cdrom"
+alias aba-video-unite="avimerge -i"
+alias aba-ssh-imposta-persistenza='echo -e "Host *\n ControlMaster auto\n ControlPath ~/.ssh/control:%h:%p:%r\n ControlPersist 1m" >> ~/.ssh/config'
+function aba-bck-server()
+{
+echo -e " BACKUP su server del file-cartella selezionato\n"
+if [ -n "$1" ]; then #Inserito un parametro
+
+    if [ ! -e "$1" ]; then # il parametro non e' un file o una Directory
+       echo -e " Spiacente, il file-cartella $1 non esiste"
+    else
+        echo -e "\033[36;41;1m\033[2K Invio di $1: \n\033[0m" 
+        RISP="n"
+        
+        if [ -n "$BCK_SERVER_ADDR" ] && [ -n "$BCK_SERVER_PORT" ] && [ -n "$BCK_SERVER_USER" ]; then
+            DOMINIO="$BCK_SERVER_USER@$BCK_SERVER_ADDR"
+            PORTA="$BCK_SERVER_PORT"
+            DIR="$BCK_SERVER_DIR"
+#             echo -e "\033[36;41;1m\033[2K Server pre-selezionato: $DOMINIO\n Porta: $PORTA\n Cartella: $DIR\n"
+            echo -e "\033[36;41;1m\033[2K*** Server pre-impostato:\n* $DOMINIO\n* Porta: $PORTA\n* Destinazione: $DIR\n***"
+            RISP="B"
+            echo -e "\033[36;41;1m\033[2K Inviare qui? [S]/n/C (C= Cambiare SOLO la cartella di Destinazione mantenendo il server)"
+            while [ $RISP == "B" ]; do
+                read RISP
+                if [ "$RISP" == "" ] || [ "$RISP" == "s" ] || [ "$RISP" == "S" ]; then
+                    RISP="s"
+                elif [ "$RISP" == "n" ] || [ "$RISP" == "N" ]; then
+                    RISP="n"
+                elif [ "$RISP" == "c" ] || [ "$RISP" == "C" ]; then
+                    echo -e "\033[36;41;1m\033[2K Cambiare cartella destinazione $BCK_SERVER_DIR in:\n"
+                    read DIR
+                    echo -e "\033[36;41;1m\033[2K Invio a cartella: $DIR\n"
+                    RISP="s"
+                else
+                    RISP="B"
+                fi
+            done
+        fi
+        
+        if [ $RISP == "n" ]; then
+            echo -e "\033[36;41;1m\033[2K*** Connessione ad altro server via SSH \n Inserire utente@server\033[0m" 
+            read DOMINIO
+            echo -e "\033[36;41;1m\033[2K*** Inserire Porta SSH (default 22) \033[0m"
+            read PORTA 
+            if [[ $PORTA == "" ]]; then 
+                PORTA=22
+            fi 
+            echo -e "\033[36;41;1m\033[2K*** Inserire Directory DESTINAZIONE (default ~) \033[0m"
+            read DIR
+            if [[ $DIR == "" ]]; then 
+                DIR="~"
+            fi 
+        fi
+        if [ -d "$1" ]; then #Directory, aggiungo il timestamp solo al nome della Directory
+            bck_dir="$1_BCK_$(date +%d.%m.%Y_%H.%M)"
+            mv "$1" "$bck_dir"
+            scp -r -P $PORTA "$bck_dir" $DOMINIO:"$DIR/$bck_dir"
+            mv "$bck_dir" "$1"
+        else #Semplice file
+            scp -P $PORTA "$1" $DOMINIO:$DIR/"$1_BCK_$(date +%d.%m.%Y_%H.%M)"
+        fi
+#         echo -e "\033[36;41;1m\033[2K*** Fine *** \033[0m\033[2K"
+    fi
+
+else
+    echo -e " Si deve inserire il nome del file-cartella da salvare"
+fi
+
+}
+
+##############################################################################
+# Stato Network
+alias n='echo -e "\033[$ABA_HOST_BG;$COLORE_TESTO;1m $(aba-network-traffico;aba-network-connessioni)\n         Proprio indirizzo IP PUBBLICO: $(aba-mioip;aba-network-porte-aperte)\033[0m"' 
+alias aba-hosts='sudo nano /etc/hosts'
+alias aba-ssh-config="nano ~/.ssh/config"
+alias aba-mioip='ABA_MIOIP=$(curl -s https://www.baviero.it/mioip.php);echo $ABA_MIOIP'
+alias aba-network-connessioni='netstat -pan --inet |grep -v  0.0.0.0'
+alias aba-network-traffico="vnstat -i $(ip r | grep default | awk {'print$5'})"
+alias aba-network-online-machine='sudo nmap -sn 192.168.1.0/24'
+
+
+function aba-network-porte-aperte()
+{
+if [ -n "$1" ]; then
+        nmap -P0 "$1"
+else 
+        echo "PORTE IN INGRESSO APERTE "
+        nmap -P0 $ABA_MIOIP | grep / | grep -vi nmap
+fi
+}
+##############################################################################
+function aba-swap-file()
+{ # Swap 2 filenames around, if they exist (from Uzi's bashrc).
+    local TMPFILE=tmp.$$
+
+    [ $# -ne 2 ] && echo "scambia il nome di 2 file, servono 2 file" && return 1
+    [ ! -e $1 ] && echo "swap: $1 non esiste" && return 1
+    [ ! -e $2 ] && echo "swap: $2 non esiste" && return 1
+
+    mv "$1" $TMPFILE
+    mv "$2" "$1"
+    mv $TMPFILE "$2"
+}
+function aba-estrai()      # Handy Extract Program
+{
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)   tar xvjf $1     ;;
+            *.tar.gz)    tar xvzf $1     ;;
+            *.bz2)       bunzip2 $1      ;;
+            *.rar)       unrar x $1      ;;
+            *.gz)        gunzip $1       ;;
+            *.tar)       tar xvf $1      ;;
+            *.tbz2)      tar xvjf $1     ;;
+            *.tgz)       tar xvzf $1     ;;
+            *.zip)       unzip $1        ;;
+            *.Z)         uncompress $1   ;;
+            *.7z)        7z x $1         ;;
+            *)           echo "prova ad estrarre '$1' con il giusto programma" ;;
+        esac
+    else
+        echo "'$1' non è un archivio!"
+    fi
+}
+
+##############################################################################
+################# alias personalizzati a seconda del sistema #################
+# ogni alias sara SOLO del relativo sistema
+# questo e' il posto giusto per scrivere gli alias e non perderseli,
+# verranno visualizati solo quelli del sistema in uso
+
+if [ "$HOSTNAME" == "portato" ]; then
+    true
+    #Qui e' possibile definire alias che si vogliono solo per 
+    #questa macchina.
+    #Se si lascia un "IF $HOSTNAME" si deve far eseguire qualcosa altrimenti darà errore
+
+elif [ "$HOSTNAME" == "benito" ]; then
+    alias aba-log-apache2='sudo cat /var/log/apache2/access.log | tail -n20'
+    alias aba-amulecollection_add='ed2k -e'
+    alias aba-amuled-restart='service amule-daemon restart'
+    alias aba-serviio-start="/home/condivisa/serviio/serviio-last/bin/serviio.sh &"
+    alias aba-serviio-preference="/home/abadon/my-bin/serviio/serviio-1.5.2/bin/serviio-console.sh &"
+fi
+##############################################################################
+########### alias tput #############
+#giusto per ricordare
+alias tput_bold='tput smso'
+alias tput_offbold='tput rmso'
+alias tput_sottolin='tput smul'
+alias tput_invert='tput rev'
+alias tput_colore_bg='tput setab'
+alias tput_colore_fg='tput setaf'
+alias tput_restore='tput sgr0'
+function tput_colori_scelta()
+{
+tput_colore_fg 3; tput_colore_bg 15; 
+meta_schermo=($(tput cols) / 2)
+echo $meta_schermo
+echo -e " Tabella colori possibili con tput \n"
+tput sgr0 ;tput sgr0
+
+if [ -n "$1" ] && [ $1 == "-a" ]; then
+    fino=256
+    echo "Colori fino al 256°"
+else
+    fino=16
+    echo -e " Colori principali fino al 16°, è possibile aggiungere [-a] \n per avere tutte le sfumature (fino 256)"
+fi
+for x in $(seq $fino);
+    do
+    tput init
+    echo -ne "$(tput setaf $x) Colore $x $(tput smso) Bold $(tput rmso) $(tput dim) Half $(tput smul) Sottolineato $(tput rev) Invertito \n"
+    tput sgr0
+    done
+}
