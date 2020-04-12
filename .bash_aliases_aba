@@ -1,40 +1,40 @@
 # !/bin/bash
-#                            _____ _          
-#                           |_   _| |__   ___ 
+#                            _____ _
+#                           |_   _| |__   ___
 #                             | | | '_ \ / _ \
 #                             | | | | | |  __/
 #                             |_| |_| |_|\___|
-#  _               _             _ _                             _           
-# | |__   __ _ ___| |__     __ _| (_) __ _ ___  ___  ___    __ _| |__   __ _ 
+#  _               _             _ _                             _
+# | |__   __ _ ___| |__     __ _| (_) __ _ ___  ___  ___    __ _| |__   __ _
 # | '_ \ / _` / __| '_ \   / _` | | |/ _` / __|/ _ \/ __|  / _` | '_ \ / _` |
 # | |_) | (_| \__ \ | | | | (_| | | | (_| \__ \  __/\__ \ | (_| | |_) | (_| |
 # |_.__/ \__,_|___/_| |_|  \__,_|_|_|\__,_|___/\___||___/  \__,_|_.__/ \__,_|
-#                                                                            
+#
 ##############################################################################
-# Aliases personalizati, se hai scaricato il mio ~/.bashrc questo file viene 
-# caricato DOPO il file "solito" .bash_aliases . Questo significa che se 
-# definisci un alias uguale nei due file quello che si trova QUI sarà quello 
+# Aliases personalizati, se hai scaricato il mio ~/.bashrc questo file viene
+# caricato DOPO il file "solito" .bash_aliases . Questo significa che se
+# definisci un alias uguale nei due file quello che si trova QUI sarà quello
 # che verrà effettivamente richiamato.
 #
-# Se si desidera un alias specifico per un sistema meglio iserirlo nel 
+# Se si desidera un alias specifico per un sistema meglio iserirlo nel
 # file ~/.bash_aliases per tenerselo per se... oppure sotto nella sezione
 # che li definisce in base a $HOSTNAME
 #
 ##############################################################################
 #   OVVIAMENTE:
-#    
+#
 #             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
 #                     Version 2, December 2004
-# 
+#
 #  Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
-# 
+#
 #  Everyone is permitted to copy and distribute verbatim or modified
 #  copies of this license document, and changing it is allowed as long
 #  as the name is changed.
-# 
+#
 #             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
 #    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-# 
+#
 #   0. You just DO WHAT THE FUCK YOU WANT TO.
 ##############################################################################
 #   OPPURE:
@@ -55,7 +55,7 @@
 
 alias ls='ls --color=auto'
 alias ll='pwd && ls -lh'
-alias la='ls -dh .?*' 
+alias la='ls -dh .?*'
 alias lal='ls -Aldh .?*'
 #alias la='ls -Ah'
 #alias lal='ls -Alh'
@@ -87,17 +87,18 @@ alias t='tree -Cuh'
 alias s='stat'
 alias sudo='sudo ' # Lo spazio dopo permette l'uso degli alias
 alias raid='mdadm -D /dev/md0'
-alias nano='nano -lc' # Numerare le righe (-l) e info in basso (-c)
+alias nano='nano -c' # Info in basso (-c)
+#alias nano='nano -lc' # Numerare le righe (-l) e info in basso (-c)
 alias figlet_font='showfigfonts'
 
-export BEEP=/usr/share/sounds/KDE-Im-New-Mail.ogg 
+export BEEP=/usr/share/sounds/KDE-Im-New-Mail.ogg
 alias beep='paplay $BEEP --volume=32768'
 alias ore='echo "sono le ore $(date +%H:%M)" | tee /dev/tty |espeak -v it'
 alias parla='echo $@ | tee /dev/tty |espeak -v it'
 alias ora=ore
 alias top="htop"
 alias spegni='clear; echo "*** SPEGNIMENTO IMMEDIATO! S/N? ***" && read SCELTA &&  if [ "$SCELTA" == "S" ]; then sudo shutdown -h now; else echo "Ok Anullato"; fi'
-alias spengo="spegni"  
+alias spengo="spegni"
 
 alias aptsearch="apt-cache search"
 alias aptinstall="sudo apt-get install"
@@ -137,7 +138,7 @@ if [ -n "$1" ]; then #Inserito un parametro
     mplayer -vo null -ao null -identify -frames 0 "$1"| grep alang
     echo -e "\033[36;41;1m\033[2KScegliere quale -alang usare\nSe non è presente NESSUN -alang o è presente uno solo non si può codificare con altre lingue\nInserire alang (ES: -alang ita -> scrivere solo ita)\033[0m"
     read ALANG
-    mencoder -idx "$1" -ovc xvid -xvidencopts bitrate=900 -alang "$ALANG" -oac mp3lame -o "$1_$ALANG.avi"    
+    mencoder -idx "$1" -ovc xvid -xvidencopts bitrate=900 -alang "$ALANG" -oac mp3lame -o "$1_$ALANG.avi"
 else
     echo -e "\033[36;41;1m\033[2KERRORE, occorre Selezionare un file\033[0m"
 fi
@@ -147,7 +148,7 @@ function aba-calc() # Semplice calcolatrice
 {
 if [ $# -ne 1 ] ; then
     echo "$0: Scorciatoia per programma - bc - scrivi valori"
-else 
+else
     ( echo scale=2; echo "$@" ) | bc
 fi
 }
@@ -177,7 +178,7 @@ if [ -n "$1" ]; then
     echo "Mettere il blocco all'aggiornamento del pacchetto?"
     echo "Scegli < S > per (sudo apt-mark hold PACCHETTO)"
     echo "Scegli < N > per (sudo apt-mark unhold PACCHETTO)"
-    
+
     SCELTA="B"
         while [ $SCELTA == "B" ]; do
                 echo "** Scegli, S/N?"
@@ -211,9 +212,9 @@ if [ -n "$1" ]; then #Inserito un parametro
     if [ ! -e "$1" ]; then # il parametro non e' un file o una Directory
        echo -e " Spiacente, il file-cartella $1 non esiste"
     else
-        echo -e "\033[36;41;1m\033[2K Invio di $1: \n\033[0m" 
+        echo -e "\033[36;41;1m\033[2K Invio di $1: \n\033[0m"
         RISP="n"
-        
+
         if [ -n "$BCK_SERVER_ADDR" ] && [ -n "$BCK_SERVER_PORT" ] && [ -n "$BCK_SERVER_USER" ]; then
             DOMINIO="$BCK_SERVER_USER@$BCK_SERVER_ADDR"
             PORTA="$BCK_SERVER_PORT"
@@ -238,20 +239,20 @@ if [ -n "$1" ]; then #Inserito un parametro
                 fi
             done
         fi
-        
+
         if [ $RISP == "n" ]; then
-            echo -e "\033[36;41;1m\033[2K*** Connessione ad altro server via SSH \n Inserire utente@server\033[0m" 
+            echo -e "\033[36;41;1m\033[2K*** Connessione ad altro server via SSH \n Inserire utente@server\033[0m"
             read DOMINIO
             echo -e "\033[36;41;1m\033[2K*** Inserire Porta SSH (default 22) \033[0m"
-            read PORTA 
-            if [[ $PORTA == "" ]]; then 
+            read PORTA
+            if [[ $PORTA == "" ]]; then
                 PORTA=22
-            fi 
+            fi
             echo -e "\033[36;41;1m\033[2K*** Inserire Directory DESTINAZIONE (default ~) \033[0m"
             read DIR
-            if [[ $DIR == "" ]]; then 
+            if [[ $DIR == "" ]]; then
                 DIR="~"
-            fi 
+            fi
         fi
         if [ -d "$1" ]; then #Directory, aggiungo il timestamp solo al nome della Directory
             bck_dir="$1_BCK_$(date +%d.%m.%Y_%H.%M)"
@@ -272,7 +273,7 @@ fi
 
 ##############################################################################
 # Stato Network
-alias n='echo -e "\033[$ABA_HOST_BG;$COLORE_TESTO;1m $(aba-network-traffico;aba-network-connessioni)\n         Proprio indirizzo IP PUBBLICO: $(aba-mioip;aba-network-porte-aperte)\033[0m"' 
+alias n='echo -e "\033[$ABA_HOST_BG;$COLORE_TESTO;1m $(aba-network-traffico;aba-network-connessioni)\n         Proprio indirizzo IP PUBBLICO: $(aba-mioip;aba-network-porte-aperte)\033[0m"'
 alias aba-hosts='sudo nano /etc/hosts'
 alias aba-ssh-config="nano ~/.ssh/config"
 alias aba-mioip='ABA_MIOIP=$(curl -s https://www.baviero.it/mioip.php);echo $ABA_MIOIP'
@@ -285,7 +286,7 @@ function aba-network-porte-aperte()
 {
 if [ -n "$1" ]; then
         nmap -P0 "$1"
-else 
+else
         echo "PORTE IN INGRESSO APERTE "
         nmap -P0 $ABA_MIOIP | grep / | grep -vi nmap
 fi
@@ -333,7 +334,7 @@ function aba-estrai()      # Handy Extract Program
 
 if [ "$HOSTNAME" == "portato" ]; then
     true
-    #Qui e' possibile definire alias che si vogliono solo per 
+    #Qui e' possibile definire alias che si vogliono solo per
     #questa macchina.
     #Se si lascia un "IF $HOSTNAME" si deve far eseguire qualcosa altrimenti darà errore
 
@@ -356,7 +357,7 @@ alias tput_colore_fg='tput setaf'
 alias tput_restore='tput sgr0'
 function tput_colori_scelta()
 {
-tput_colore_fg 3; tput_colore_bg 15; 
+tput_colore_fg 3; tput_colore_bg 15;
 meta_schermo=($(tput cols) / 2)
 echo $meta_schermo
 echo -e " Tabella colori possibili con tput \n"
