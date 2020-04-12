@@ -94,8 +94,8 @@ alias figlet_font='showfigfonts'
 export BEEP=/usr/share/sounds/KDE-Im-New-Mail.ogg
 alias beep='paplay $BEEP --volume=32768'
 alias ore='echo "sono le ore $(date +%H:%M)" | tee /dev/tty |espeak -v it'
-alias parla='echo $@ | tee /dev/tty |espeak -v it'
 alias ora=ore
+alias parla='echo $@ | tee /dev/tty |espeak -v it'
 alias top="htop"
 alias spegni='clear; echo "*** SPEGNIMENTO IMMEDIATO! S/N? ***" && read SCELTA &&  if [ "$SCELTA" == "S" ]; then sudo shutdown -h now; else echo "Ok Anullato"; fi'
 alias spengo="spegni"
@@ -103,6 +103,41 @@ alias spengo="spegni"
 alias aptsearch="apt-cache search"
 alias aptinstall="sudo apt-get install"
 alias aptremove="sudo apt-get remove --purge"
+alias aptupgrade='sudo apt update && sudo apt upgrade'
+function aptdowngrade()
+{
+  echo -e "DOWNGRADE di un pacchetto\n"
+  if [ -n "$1" ]; then
+    echo " Versioni DISPONIBILI: "
+    apt-cache show "$1" | grep Version
+    echo "Eseguiro : sudo apt-get install nomepacchetto=versione"
+    echo "Scrivi solo: nomepacchetto=versione e premi INVIO"
+    read PACCHETTO
+    sudo apt-get install $PACCHETTO
+    echo -e "\n *********** FATTO\n"
+    echo "Mettere il blocco all'aggiornamento del pacchetto?"
+    echo "Scegli < S > per (sudo apt-mark hold PACCHETTO)"
+    echo "Scegli < N > per (sudo apt-mark unhold PACCHETTO)"
+
+    SCELTA="B"
+    while [ $SCELTA == "B" ]; do
+      echo "** Scegli, S/N?"
+      read SCELTA
+      if [ "$SCELTA" == "S" ] || [ "$SCELTA" == "s" ]; then
+        echo "Eseguo sudo apt-mark hold di $PACCHETTO"
+        sudo apt-mark hold $PACCHETTO
+      elif [ "$SCELTA" == "N" ] || [ "$SCELTA" == "n" ]; then
+        echo "Ok, il pacchetto $PACCHETTO potrà essere aggiornato normalmente"
+        echo "Eseguo sudo apt-mark unhold di $PACCHETTO"
+        sudo apt-mark unhold $PACCHETTO
+      else
+        SCELTA="B"
+      fi
+    done
+  else
+    echo " Si deve inserire il nome del pacchetto da ripristinare"
+  fi
+}
 
 
 #eval $(thefuck --alias fuck)
@@ -163,41 +198,6 @@ function aba-open()
 xdg-open "$1" &
 }
 
-alias aba-apt-upgrade='sudo apt update && sudo apt upgrade'
-function aba-apt-downgrade()
-{
-echo -e "DOWNGRADE di un pacchetto\n"
-if [ -n "$1" ]; then
-    echo " Versioni DISPONIBILI: "
-    apt-cache show "$1" | grep Version
-    echo "Eseguiro : sudo apt-get install nomepacchetto=versione"
-    echo "Scrivi solo: nomepacchetto=versione e premi INVIO"
-    read PACCHETTO
-    sudo apt-get install $PACCHETTO
-    echo -e "\n *********** FATTO\n"
-    echo "Mettere il blocco all'aggiornamento del pacchetto?"
-    echo "Scegli < S > per (sudo apt-mark hold PACCHETTO)"
-    echo "Scegli < N > per (sudo apt-mark unhold PACCHETTO)"
-
-    SCELTA="B"
-        while [ $SCELTA == "B" ]; do
-                echo "** Scegli, S/N?"
-                read SCELTA
-                if [ "$SCELTA" == "S" ] || [ "$SCELTA" == "s" ]; then
-                    echo "Eseguo sudo apt-mark hold di $PACCHETTO"
-                    sudo apt-mark hold $PACCHETTO
-                elif [ "$SCELTA" == "N" ] || [ "$SCELTA" == "n" ]; then
-                    echo "Ok, il pacchetto $PACCHETTO potrà essere aggiornato normalmente"
-                    echo "Eseguo sudo apt-mark unhold di $PACCHETTO"
-                    sudo apt-mark unhold $PACCHETTO
-                else
-                    SCELTA="B"
-                fi
-        done
-else
-    echo " Si deve inserire il nome del pacchetto da ripristinare"
-fi
-}
 
 alias aba-disk-control='smartctl -ia'
 alias aba-messages-syslog='tail -f /var/log/syslog'
