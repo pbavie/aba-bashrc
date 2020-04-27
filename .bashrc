@@ -1,18 +1,18 @@
 # ~/.bashrc: Comandi eseguiti all'avvio nelle shell
-#  _____ _                  _               _               _              
-# |_   _| |__   ___    __ _| |__   __ _    | |__   __ _ ___| |__  _ __ ___ 
+#  _____ _                  _               _               _
+# |_   _| |__   ___    __ _| |__   __ _    | |__   __ _ ___| |__  _ __ ___
 #   | | | '_ \ / _ \  / _` | '_ \ / _` |   | '_ \ / _` / __| '_ \| '__/ __|
-#   | | | | | |  __/ | (_| | |_) | (_| |  _| |_) | (_| \__ \ | | | | | (__ 
+#   | | | | | |  __/ | (_| | |_) | (_| |  _| |_) | (_| \__ \ | | | | | (__
 #   |_| |_| |_|\___|  \__,_|_.__/ \__,_| (_)_.__/ \__,_|___/_| |_|_|  \___|
-# 
+#
 ##############################################################################
 #
-# Scopo di questo .bashrc e' avere un unico file di configurazione per 
+# Scopo di questo .bashrc e' avere un unico file di configurazione per
 # piu' PC.
-# 
+#
 # E' pensato per funzionare in sinergia con altri 2 file:
 #
-# 1)~/.bash_aliases 
+# 1)~/.bash_aliases
 #       File solitamente gia' presente con la bash dove vengono salvate
 #       le variabili utili e gli alias "personali" di ogni PC
 # 2)~/.bash_aliases_aba
@@ -20,7 +20,7 @@
 #       e che sono condivisi con tutti i PC
 #
 # Questo .bashrc tiene traccia dei cambiamenti effettuati a se stesso e
-# al file ~/.bash_aliases_aba e li puo' scricare/caricare sul server di 
+# al file ~/.bash_aliases_aba e li puo' scricare/caricare sul server di
 # riferimento impostato.
 #
 # L'uso è molto semplice, basta scrivere "aba" premer <TAB> e vedere cosa
@@ -28,16 +28,16 @@
 ##############################################################################
 #             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
 #                     Version 2, December 2004
-# 
+#
 #  Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
-# 
+#
 #  Everyone is permitted to copy and distribute verbatim or modified
 #  copies of this license document, and changing it is allowed as long
 #  as the name is changed.
-# 
+#
 #             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
 #    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-# 
+#
 #   0. You just DO WHAT THE FUCK YOU WANT TO.
 ##############################################################################
 #   OPPURE:
@@ -82,14 +82,14 @@ unalias -a
 
 ##### History piu' completa ##################################
 #Aggiunge la history alla fine del file .bash_history invece di sostituire
-shopt -s histappend 
+shopt -s histappend
 #Aggiungo il controllo del completamento con la history
 shopt -s histverify
 #Carica un tot di righe di history
 HISTSIZE=10000
 #Aumenta le dimensioni del file .bash_history
 HISTFILESIZE=1000000
-# Decomentare per non avere righe doppie nella history. 
+# Decomentare per non avere righe doppie nella history.
 #export HISTCONTROL=ignoredups
 # Ignorare spazzi
 #export HISTCONTROL=ignorespace
@@ -101,7 +101,7 @@ HISTIGNORE='ls:la:ll:lal:l:bg:fg:history:pass:sudo:c:pwd:f:p:h:t:tree'
 HISTTIMEFORMAT="%d/%m/%y %T "
 # Abilita l'uso della history negli script
 # HISTFILE=~/.bash_history
-# set -o history 
+# set -o history
 # Salva l'history ad ogni comando
 export PROMPT_COMMAND='history -a'
 
@@ -118,7 +118,7 @@ ULTIMO_COMANDO=$(tail -n 1 ~/.bash_history)
 if [[ $ULTIMO_COMANDO =~ "apt" ]] && [[ $ULTIMO_COMANDO =~ "install" ]]; then
     if [[ $ULTIMO_COMANDO != $COMANDO_PRECEDENTE ]] && $(which $ULTIMO_COMANDO > /dev/null); then
         # Passo l'output a tee per poter gestire sudo
-        
+
         echo $ULTIMO_COMANDO | sudo tee -a /root/.aba_programmi_installati >/dev/null
         echo -e "\033[37;42;1m\033[2K Installazione scritta in /root/.aba_programmi_installati \033[0m"
     fi
@@ -142,14 +142,14 @@ fi
 if [ ! -f ~/.bash_aliases ]; then #Se non esiste lo creo
     touch ~/.bash_aliases
     echo -e "\033[36;41;1m\033[2K*** ATTENZIONE Nessun files .bash_aliases presente.\n***\033[0m"
-fi 
-if grep -q "# ALTRI ALIAS IN ~/.bash_aliases_aba" ~/.bash_aliases; then # Contiene la mia stringa 
+fi
+if grep -q "# ALTRI ALIAS IN ~/.bash_aliases_aba" ~/.bash_aliases; then # Contiene la mia stringa
     true
 else # Aggiungo alla fine le mie variabili
     echo -e "# ALTRI ALIAS IN ~/.bash_aliases_aba\n### Imposta Colore Principale della bash\n#  Colori disponibili:\n#  1) Colore  BLU\n#  2) Colore  ROSSO\n#  3) Colore  GIALLO\n#  4) Colore  BIANCO\n#  5) Colore  MAGENTA\n#  6) Colore  CIANO\n#  7) Colore  VERDE\nexport ABA_COLORE=1\n" >> ~/.bash_aliases
     echo -e "# Indirizzo dove trovare il repository del bashrc e bash_aliases_aba\nexport BASH_WWW_SERVER=\"home.baviero.it/download/bash\"\n" >> ~/.bash_aliases
     echo -e "# Indirizzo del server dove effettuare i backup (vedi .bash_aliases_aba)\n# export BCK_SERVER_ADDR=\"home.baviero.it\"\n# export BCK_SERVER_USER=\"nome_utente\"\n# export BCK_SERVER_PORT=\"PORTA\"\n# export BCK_SERVER_DIR=\"/tua/dir/bck\"\n# export BCK_SERVER_BASH=\"/var/www/html/download/bash\"\n" >> ~/.bash_aliases
-    echo -e "# Server-PC da monitorare\nexport SERVER_CHECK=\$BCK_SERVER_ADDR" >> ~/.bash_aliases 
+    echo -e "# Server-PC da monitorare\nexport SERVER_CHECK=\$BCK_SERVER_ADDR" >> ~/.bash_aliases
     echo -e "\033[36;41;1m\033[2K*** Aggiunte voci al tuo ~/.bash_aliases (unico per questo pc), controlla se devi modificare qualcosa.\n***\033[0m"
 fi
 . ~/.bash_aliases # Carico il file con le sue impostazioni
@@ -162,7 +162,7 @@ if [ -f ~/.bash_aliases_aba ]; then
 else			# SE BASH_ALIASES_ABA NON PRESENTE CHIEDO DI SCARICARLO
     echo -e "\033[36;41;1m\033[2K******************** BENVENUTO ********************************"
     echo "** Questo sembra essere il primo avvio della bash dopo aver  **"
-    echo "** scaricato il mio file .bashrc .                           **"        
+    echo "** scaricato il mio file .bashrc .                           **"
     echo -e "** Attualmente il File\033[42;93;1m  .bash_aliases_aba  \033[36;41;1m non è presente.  **"
     echo "** All'interno di questo file ho salvato alcune funzioni e   **"
     echo "** alias che ho trovato utili in questi anni. Di perse' non  **"
@@ -192,7 +192,7 @@ else			# SE BASH_ALIASES_ABA NON PRESENTE CHIEDO DI SCARICARLO
 fi
 
 ########### Personalizza COLORE  #############
-# Personaliza il colore in base al valore inserito nella 
+# Personaliza il colore in base al valore inserito nella
 # variabile $ABA_COLORE indicata del file ~/.bash_aba
 function _ABA_SCELTA_COLORE()
 {
@@ -214,7 +214,7 @@ elif [ "$ABA_COLORE" == "5" ]; then
 elif [ "$ABA_COLORE" == "6" ]; then
     export ABA_HOST_FG="36" #Ciano
     export ABA_HOST_BG="46"
-else ### Qualsiasi altro valore 
+else ### Qualsiasi altro valore
     export ABA_HOST_FG="32" #Verde
     export ABA_HOST_BG="42"
 fi
@@ -222,21 +222,21 @@ fi
 ##### Funzione per impostare indirizzo e utente del server se non salvati in ~/.bash_aliases
 function aba-bck-server-setup-con()
 {
-    echo -e "\033[36;41;1m\033[2K*** Imposto connessione SSH \n Inserire indirizzo server: \033[0m" 
-    local OLD_ADR=$BCK_SERVER_ADDR 
-    read BCK_SERVER_ADDR 
+    echo -e "\033[36;41;1m\033[2K*** Imposto connessione SSH \n Inserire indirizzo server: \033[0m"
+    local OLD_ADR=$BCK_SERVER_ADDR
+    read BCK_SERVER_ADDR
     echo -e "\033[36;41;1m\033[2K*** Inserire Utente: (default $USER)\033[0m"
     local OLD_USER=$BCK_SERVER_USER
     read BCK_SERVER_USER
-    if [[ $BCK_SERVER_USER == "" ]]; then 
+    if [[ $BCK_SERVER_USER == "" ]]; then
         BCK_SERVER_USER=$USER
-    fi 
-    echo -e "\033[36;41;1m*** Inserire Porta SSH (default 22) \033[0m" 
+    fi
+    echo -e "\033[36;41;1m*** Inserire Porta SSH (default 22) \033[0m"
     local OLD_PORT=$BCK_SERVER_PORT
-    read BCK_SERVER_PORT 
-    if [[ $BCK_SERVER_PORT == "" ]]; then 
+    read BCK_SERVER_PORT
+    if [[ $BCK_SERVER_PORT == "" ]]; then
         BCK_SERVER_PORT=22
-    fi 
+    fi
     echo -e "\033[36;41;1m*** Dati inseriti :\n SERVER SSH: $BCK_SERVER_ADDR\n USER: $BCK_SERVER_USER\n PORTA: $BCK_SERVER_PORT \n\033[0m"
     echo -e "\033[36;41;1m* [S] Salvare in ~/.bash_aliases\n* [U] Usare in questa sessione senza salvare\n* [A] Annullare\n \033[0m"
     SALVARE="B"
@@ -251,12 +251,12 @@ function aba-bck-server-setup-con()
             sed -ie s/export\ BCK_SERVER_PORT=.*/export\ BCK_SERVER_PORT=\"$BCK_SERVER_PORT\"/ ~/.bash_aliases
             sed -ie 's/#\ export\ BCK_SERVER_PORT/export\ BCK_SERVER_PORT/' ~/.bash_aliases
         elif [ $SALVARE == "U" ] || [ $SALVARE == "u" ]; then
-            echo -e "\033[36;41;1m*** Variabili impostate SOLO per la sessione corrente \033[0m" 
+            echo -e "\033[36;41;1m*** Variabili impostate SOLO per la sessione corrente \033[0m"
         elif [ $SALVARE == "A" ] || [ $SALVARE == "a" ]; then
             BCK_SERVER_ADDR=$OLD_ADR;unset OLD_ADR
             BCK_SERVER_USER=$OLD_USER;unset OLD_USER
             BCK_SERVER_PORT=$OLD_PORT;unset OLD_PORT
-            echo -e "\033[36;41;1m*** Annullato. \033[0m" 
+            echo -e "\033[36;41;1m*** Annullato. \033[0m"
         else
             SALVARE="B"
         fi
@@ -265,19 +265,19 @@ function aba-bck-server-setup-con()
 ### Funzione per impostare le giuste cartelle di bckup dei file .bash_* e dei bck ( vedi .bash_aliases_aba)
 function aba-bck-server-setup-dir()
 {
-    echo -e "\033[36;41;1m\033[2K* Imposto cartelle destinazione su server remoto *\n\n* INSERIRE CARTELLA SALVATAGGIO .bashrc e .bash_aliases_aba:\033[0m" 
-    echo -e "\033[36;41;1m\033[2K (meglio se coincide con quella raggiungibile via http)\n (ENTER per mantenere l'attuale)\n    Es: /var/www/html/download/bash senza / finale\033[0m" 
-    local OLD_BASH_DIR=$BCK_SERVER_BASH 
+    echo -e "\033[36;41;1m\033[2K* Imposto cartelle destinazione su server remoto *\n\n* INSERIRE CARTELLA SALVATAGGIO .bashrc e .bash_aliases_aba:\033[0m"
+    echo -e "\033[36;41;1m\033[2K (meglio se coincide con quella raggiungibile via http)\n (ENTER per mantenere l'attuale)\n    Es: /var/www/html/download/bash senza / finale\033[0m"
+    local OLD_BASH_DIR=$BCK_SERVER_BASH
     read  BCK_SERVER_BASH
-    if [[ $BCK_SERVER_BASH == "" ]]; then 
+    if [[ $BCK_SERVER_BASH == "" ]]; then
         BCK_SERVER_BASH=$OLD_BASH_DIR
-    fi    
-    echo -e "\033[36;41;1m\033[2K* INSERIRE CARTELLA SALVATAGGIO BCK \n    (vedi funz. in .bash_aliases_aba):\n (ENTER per mantenere l'attuale)\033[0m" 
+    fi
+    echo -e "\033[36;41;1m\033[2K* INSERIRE CARTELLA SALVATAGGIO BCK \n    (vedi funz. in .bash_aliases_aba):\n (ENTER per mantenere l'attuale)\033[0m"
     local OLD_BCK_DIR=$BCK_SERVER_DIR
     read BCK_SERVER_DIR
-    if [[ $BCK_SERVER_DIR == "" ]]; then 
+    if [[ $BCK_SERVER_DIR == "" ]]; then
         BCK_SERVER_DIR=$OLD_BCK_DIR
-    fi 
+    fi
     echo -e "\033[36;41;1m*** Dati inseriti :\n CARTELLA BASH: $BCK_SERVER_BASH\n CARTELLA BCK:  $BCK_SERVER_DIR\n\033[0m"
     echo -e "\033[36;41;1m* [S] Salvare in ~/.bash_aliases\n* [U] Usare in questa sessione senza salvare\n* [A] Annullare\n \033[0m"
     SALVARE="B"
@@ -290,11 +290,11 @@ function aba-bck-server-setup-dir()
                 sed -ie "s|export\ BCK_SERVER_DIR=.*|export\ BCK_SERVER_DIR=\"$BCK_SERVER_DIR\"|" ~/.bash_aliases
                 sed -ie 's/#\ export\ BCK_SERVER_DIR/export\ BCK_SERVER_DIR/' ~/.bash_aliases
             elif [ $SALVARE == "U" ] || [ $SALVARE == "u" ]; then
-                echo -e "\033[36;41;1m*** Variabili impostate SOLO per la sessione corrente \033[0m" 
+                echo -e "\033[36;41;1m*** Variabili impostate SOLO per la sessione corrente \033[0m"
             elif [ $SALVARE == "A" ] || [ $SALVARE == "a" ]; then
                 BCK_SERVER_BASH=$OLD_BASH_DIR;unset OLD_BASH_DIR
                 BCK_SERVER_DIR=$OLD_BCK_DIR;unset OLD_BCK_DIR
-                echo -e "\033[36;41;1m*** Annullato. \033[0m" 
+                echo -e "\033[36;41;1m*** Annullato. \033[0m"
             else
                 SALVARE="B"
             fi
@@ -326,7 +326,7 @@ else
         echo -e "\033[35;40m 5) Colore \033[45;97m MAGENTA \033[0m"
         echo -e "\033[36;40m 6) Colore \033[46;97m CIANO   \033[0m"
         echo -e "\033[32;40m 7) Colore \033[42;97m VERDE   \033[0m"
-        read ABA_COLORE 
+        read ABA_COLORE
         sed -ie s/^export\ ABA_COLORE=.*/"export\ ABA_COLORE=$ABA_COLORE"/ ~/.bash_aliases
 fi
 source ~/.bashrc
@@ -335,7 +335,7 @@ source ~/.bashrc
 # Scarica il file bashrc presente sul server
 function aba-bash-bashrc-download()
 {
-wget $BASH_WWW_SERVER/bashrc.txt -O ~/.TMP_bashrc 
+wget $BASH_WWW_SERVER/bashrc.txt -O ~/.TMP_bashrc
 if [ -s ~/.TMP_bashrc ]; then #File esiste e non e' vuoto
     if grep -q "export PS1=" ~/.TMP_bashrc; then # Contiene la stringa che imposta il prompt della bash
         if diff ~/.TMP_bashrc ~/.bashrc &> /dev/null; then # E' diverso da quello attuale ?
@@ -373,9 +373,9 @@ alias aba-bash-bashrc-diff='echo " Prima il file locale, poi remoto"; wget -qO -
 # Scarica il file bash_aliases_aba presente sul server
 function aba-bash-aliases-download()
 {
-wget $BASH_WWW_SERVER/bash_aliases_aba.txt -O ~/.TMP_bash_aliases_aba 
+wget $BASH_WWW_SERVER/bash_aliases_aba.txt -O ~/.TMP_bash_aliases_aba
 if [ -s ~/.TMP_bash_aliases_aba ]; then #File esiste e non e' vuoto
-    if grep -q "alias aba-ping-google=" ~/.TMP_bash_aliases_aba; then # Contiene la stringa 
+    if grep -q "alias aba-ping-google=" ~/.TMP_bash_aliases_aba; then # Contiene la stringa
         if diff ~/.TMP_bash_aliases_aba ~/.bash_aliases_aba &> /dev/null; then # E' diverso da quello attuale ?
             echo -e "\033[36;41;1m\033[2K *** File .bash_aliases_aba scaricato uguale all'attuale \033[0m"
             rm -f ~/.TMP_bash_aliases_aba
@@ -413,7 +413,7 @@ function aba-bash-diff()
 {
 if [[ `wget -qO - $BASH_WWW_SERVER/bashrc.txt| diff ~/.bashrc -` ]]; then
     echo -e "\033[41;30m\033[2K ATTENZIONE - Trovato file BASHRC diverso sul server \033[0m"
-else 
+else
     echo -e "\033[37;42;1m\033[2K  .bashrc aggiornato \033[0m"
 fi
 if [[ `wget -qO - $BASH_WWW_SERVER/bash_aliases_aba.txt| diff ~/.bash_aliases_aba -` ]]; then
@@ -451,7 +451,7 @@ export PS1="\[\033[0;"$ABA_HOST_FG"m\]{\[\033[0;"$ABA_USER_C"m\]\u\[\033[0;"$ABA
 [ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
-# Imposta la variabile 
+# Imposta la variabile
 #if [ -z "$debian_chroot" -a -r /etc/debian_chroot ]; then
 #    debian_chroot=$(cat /etc/debian_chroot)
 #fi
@@ -472,7 +472,7 @@ export PS1="\[\033[0;"$ABA_HOST_FG"m\]{\[\033[0;"$ABA_USER_C"m\]\u\[\033[0;"$ABA
 #echo -e "\033[33;44;1m Utenti: \033[0m" ; users
 
 # Assegno un colore adatto alle righe di sfondo
-if [ $ABA_HOST_BG == "103" ] || [ $ABA_HOST_BG == "107" ];then 
+if [ $ABA_HOST_BG == "103" ] || [ $ABA_HOST_BG == "107" ];then
         COLORE_TESTO="31"
 else
         COLORE_TESTO="97"
@@ -497,17 +497,22 @@ echo -e "\033[$COLORE_TESTO;$ABA_HOST_BG;1m\033[2K Uptime: $(uptime)\033[0m"
 #echo  Ultimo utente entrato nel sistema; cat /var/log/auth.log | grep Accepted | grep -v $USER | tail -n3`
 
 # Top of 3 Processes
-# ps axo tty,pid,comm,user,pcpu --sort pcpu | tail -n3 
+# ps axo tty,pid,comm,user,pcpu --sort pcpu | tail -n3
 
 # Traffic in/out from network interface (you MUST install vnstat and change eth0 with your)
-# vnstat -i eth0 -tr | grep kB/s | awk -F ' ' {'print $2 " " $3 " "$4" p/s";'} 
+# vnstat -i eth0 -tr | grep kB/s | awk -F ' ' {'print $2 " " $3 " "$4" p/s";'}
 
 # Controlla se siamo collegati in rete e fa' cose, serve aba-mioip definito in .bash_aliases_aba
 if nc -zw1 google.com 443 2> /dev/null; then
         #### QUI INSERIRE LE VERIFICHE DA FARE SE SI E' COLLEGATI IN RETE
         ABA_MIOIP=$(aba-mioip)
-        echo -e "\033[$ABA_HOST_BG;$COLORE_TESTO;1m\033[2K COLLEGATO - IP Pubblico: $ABA_MIOIP \c\033[0m"
-        
+        CONNESSIONE_LOCALE=$(ip r list 2> /dev/null | grep default | awk '{print "Gateway: " $3 " - Interf.: " $5 }')
+        echo -e "\033[$ABA_HOST_BG;$COLORE_TESTO;1m\033[2K COLLEGATO - IP Pubblico: $ABA_MIOIP - $CONNESSIONE_LOCALE \c\033[0m"
+        # Controlla se collegati via WiFi e scrive nome rete
+        ESSID=$(iwconfig 2> /dev/null | grep ESSID | awk '{print $4}')
+        if [ -n $ESSID ]; then
+          echo -e "\033[$ABA_HOST_BG;$COLORE_TESTO;1m\033[ - WiFi: $ESSID \c\033[0m"
+        fi
         # Controlla se il proprio server(o comunque un pc) e' online
         #SERVER_CONTROLLARE=`echo $BASH_WWW_SERVER | awk -F  "/" '{print $1}'`
         if [ "$SERVER_CHECK" != "" ]; then
@@ -530,7 +535,7 @@ fi
 
 
 ################# Azioni da eseguire in uscita dalla shell
-function in_uscita()              
+function in_uscita()
 {
 
 #Disegna la scritta con figlet
@@ -549,10 +554,10 @@ trap in_uscita EXIT
 
 # Stampa una battuta (-s = corta)
 # e' necessario installare fortunes, fortunes-it fortunes-it-off(ENSIVE)
-function battutine() 
+function battutine()
 {
 if [ -x /usr/games/fortune ]; then
-    /usr/games/fortune -s 
+    /usr/games/fortune -s
 fi
 }
 
@@ -587,7 +592,7 @@ echo -e "\033[36;40;1m\033[2K$(pwd) - $PWD_FILE File($PWD_F_MEGA Mb) - $PWD_DIR 
 #
 #    ESC [ Nr.Colore_primo_piano;Nr.Colore_fondo;NUMEROm
 #
-#  Il ``NUMERO'' che precede la ``m'' alla fine del comando 
+#  Il ``NUMERO'' che precede la ``m'' alla fine del comando
 #  consente svariate combinazioni, vediamo le principali:
 #
 #   0 = Default
@@ -600,7 +605,7 @@ echo -e "\033[36;40;1m\033[2K$(pwd) - $PWD_FILE File($PWD_F_MEGA Mb) - $PWD_DIR 
 #
 #   Numeri dei colori In Primo Piano:           Numeri dei colori di fondo:
 #
-#   l = Luminoso   				
+#   l = Luminoso
 #                               Nero=40
 #   Nero=30  					Rosso=41
 #   Grigio=30;1m  				Verde=42
@@ -622,4 +627,3 @@ echo -e "\033[36;40;1m\033[2K$(pwd) - $PWD_FILE File($PWD_F_MEGA Mb) - $PWD_DIR 
 #  Esempi:
 # echo -e "\033[33;44;1m Linux \033[0m" # Giallo su fondo Blu
 # echo -e "\033[33;44;3m Linux \033[0m" # Marrone su fondo Blu
-
