@@ -102,8 +102,11 @@ alias spengo="spegni"
 
 alias aptsearch="apt-cache search"
 alias aptinstall="sudo apt-get install"
+alias installa=aptinstall
 alias aptremove="sudo apt-get remove --purge"
-alias aptupgrade='sudo apt update && sudo apt upgrade'
+alias rimuovi=aptremove
+alias aptupgrade='sudo apt update && sudo apt dist-upgrade'
+alias aggiorna='aptupgrade -y'
 function aptdowngrade()
 {
   echo -e "DOWNGRADE di un pacchetto\n"
